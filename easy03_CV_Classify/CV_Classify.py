@@ -81,7 +81,7 @@ for i in range(Epoch):
             feed=feeder.feed(data),
             fetch_list=[loss])
         batch_loss = np.average(outs[0])
-    # 测试集 只看准确率来判断收敛情况
+    # 验证集 只看准确率来判断收敛情况
     for batch_id, data in enumerate(val_reader()):
         outs = exe.run(program=eval_prog,
                        feed=feeder.feed(data),
