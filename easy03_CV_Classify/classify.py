@@ -7,7 +7,7 @@ import paddle.fluid as fluid
 import numpy as np
 import PIL.Image as Image
 
-data_path = "./data"
+data_path = "../easy07_visual_feature_map/data"
 save_model_path = "./model"
 
 

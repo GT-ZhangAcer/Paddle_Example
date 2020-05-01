@@ -11,8 +11,8 @@ data_X = [[1], [2], [3], [5], [10]]
 data_Y = [[13], [23], [33], [53], [103]]
 
 # 定义张量格式
-x = fluid.layers.data(name="x", shape=[1], dtype="float32")
-y = fluid.layers.data(name="y", shape=[1], dtype="float32")
+x = fluid.data(name="x", shape=[-1, 1], dtype="float32")
+y = fluid.data(name="y", shape=[-1, 1], dtype="float32")
 
 # 定义神经网络
 out = fluid.layers.fc(input=x, size=1)
@@ -38,6 +38,6 @@ for i in range(100):
         y_ = np.array(y_).reshape(1, 1).astype("float32")
         info = exe.run(feed={"x": x_, "y": y_}, fetch_list=[loss])
         if i % 10 == 0:
-            print(info[0])
+            print("EPOCH:", i, "损失值：", info[0])
 
 fluid.io.save_inference_model(dirname="infer.model", feeded_var_names=["x"], target_vars=[out], executor=exe)

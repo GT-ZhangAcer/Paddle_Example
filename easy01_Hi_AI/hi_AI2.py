@@ -27,8 +27,8 @@ start_program = fluid.Program()  # 用于初始化框架的空白程序
 
 with fluid.program_guard(main_program=hi_ai_program, startup_program=start_program):
     # 定义张量格式
-    x = fluid.layers.data(name="x", shape=[1], dtype="float32")
-    y = fluid.layers.data(name="y", shape=[1], dtype="float32")
+    x = fluid.data(name="x", shape=[-1, 1], dtype="float32")
+    y = fluid.data(name="y", shape=[-1, 1], dtype="float32")
 
     # 定义神经网络
     out = fluid.layers.fc(input=x, size=1)
@@ -57,7 +57,7 @@ for epoch in range(100):
                        feed=train_feeder.feed(data),
                        fetch_list=[loss])
         if epoch % 10 == 0:
-            print(info[0])
+            print("EPOCH:", epoch, "损失值：", info[0])
 
 fluid.io.save_inference_model(dirname="infer.model",
                               feeded_var_names=["x"],
