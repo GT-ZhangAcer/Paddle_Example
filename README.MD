@@ -1,2 +1,3 @@
 # 深度学习开发入门教程
-项目基于PaddlePaddleV1.6版本进行开发，相对于深度学习课程，该教程更倾向于快速开发。
+
+仓库仅做代码备份，文档介绍以及实战环境请戳->[进入导航页](https://aistudio.baidu.com/aistudio/projectdetail/436450)
