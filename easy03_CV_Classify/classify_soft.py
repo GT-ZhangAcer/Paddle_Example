@@ -93,14 +93,20 @@ exe.run(prog)
 # 开始训练
 Epoch = 10
 for i in range(Epoch):
-    batch_loss = None
+    train_loss = None
+    test_loss = None
     # 训练集 只看loss来判断模型收敛情况
     for batch_id, data in enumerate(train_reader()):
         outs = exe.run(
             feed=feeder.feed(data),
             fetch_list=[loss])
-        batch_loss = np.average(outs[0])
-    print("Epoch:", i, "\tLoss:{:3f}".format(batch_loss))
+        train_loss = np.average(outs[0])
+    for batch_id, data in enumerate(train_reader()):
+        outs = exe.run(
+            feed=feeder.feed(data),
+            fetch_list=[loss])
+        test_loss = np.average(outs[0])
+    print("Epoch:", i, "\tTrain loss:{:3f}".format(train_loss), "\tTest loss:{:3f}".format(test_loss))
 
 # 保存模型
 fluid.io.save_inference_model(save_model_path, ['img'], [net_out], exe)
