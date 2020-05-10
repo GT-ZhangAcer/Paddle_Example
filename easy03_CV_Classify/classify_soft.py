@@ -31,7 +31,7 @@ def switch_reader(is_val: bool = False):
             im = np.array(im).reshape(1, 1, 30, 15).astype(np.float32)  # NCHW格式
             im /= 255  # 归一化以提升训练效果
             img_label = int(labels[index - 1])  # 图片对应的标签值
-            # 创建soft_label 前1-10个位置为0~9的概率，11、12代表奇偶的概率，11为奇数，12为偶数
+            # 创建soft_label 前1-10个位置为0~9的概率，11、12代表奇偶的概率，12为奇数，11为偶数
             lab = np.zeros([1, 12], dtype=np.float32)
             if img_label % 2 == 0:
                 # 若label为偶数(此时包括0在内了)
@@ -69,11 +69,11 @@ conv3 = fluid.layers.conv2d(input=conv2,
 # 以softmax为激活函数的全连接输出层，输出层的大小为数字的个数类别A数字0-9[10] + 类别B奇偶数[2]
 net_out = fluid.layers.fc(input=conv3, size=12)
 
-# 使用API来计算正确率
-# acc = fluid.layers.accuracy(input=net_out, label=label)
+
 # 将上方的结构克隆出来给测试程序使用
 eval_prog = fluid.default_main_program().clone(for_test=True)
-# 定义损失函数
+
+# 定义多标签损失函数
 loss = fluid.layers.sigmoid_cross_entropy_with_logits(net_out, label)
 avg_loss = fluid.layers.mean(loss)
 
